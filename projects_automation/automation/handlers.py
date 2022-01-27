@@ -114,7 +114,7 @@ def save_student_input(update, context):
     message = update.message
     user_id = message.chat_id
     context.user_data['working_interval_to'] = message.text
-    if not Student.objects.get(tg_id=context.user_data['user_id']):
+    if not Student.objects.filter(tg_id=context.user_data['user_id']):
         Student.objects.create(
             tg_id=context.user_data['user_id'],
             name=context.user_data['name'],
