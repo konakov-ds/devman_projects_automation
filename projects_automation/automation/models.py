@@ -48,7 +48,8 @@ class Group(models.Model):
 class Student(models.Model):
     tg_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=100)
-    group = models.ForeignKey(Group, related_name='students', null=True, on_delete=models.SET_NULL)
+    group = models.ForeignKey(Group, related_name='students',
+                              null=True, blank=True, on_delete=models.SET_NULL)
     level = models.CharField(max_length=20)
     working_interval_from = models.TimeField(blank=True, null=True)
     working_interval_to = models.TimeField(blank=True, null=True)
