@@ -54,6 +54,7 @@ class Student(models.Model):
     level = models.CharField(max_length=20)
     working_interval_from = models.TimeField(blank=True, null=True)
     working_interval_to = models.TimeField(blank=True, null=True)
+    email = models.EmailField(verbose_name='Email', blank=True, null=True)
 
     def __str__(self):
         return f'Student {self.name}_{self.tg_id}'
