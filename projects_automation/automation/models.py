@@ -32,7 +32,8 @@ class PM(models.Model):
 
 
 class Group(models.Model):
-    pm = models.ForeignKey(PM, related_name='groups', on_delete=models.CASCADE)
+    pm = models.ForeignKey(PM, related_name='groups',
+                           null=True, blank=True, on_delete=models.CASCADE)
     start_from = models.DateTimeField(blank=True, null=True)
     board_url = models.URLField(verbose_name='URL Trello доски', blank=True, null=True)
 
