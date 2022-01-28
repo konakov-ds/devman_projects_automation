@@ -2,7 +2,7 @@
   {
       "role": "student",
       "name": "Александр Попов",
-      "level": "june",
+      "level": "junior",
       "working_interval_from": "18:00",
       "working_interval_to": "19:00",
       "tg_id": "12345"
