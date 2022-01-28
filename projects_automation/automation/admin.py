@@ -9,7 +9,9 @@ class PMAdmin(admin.ModelAdmin):
 
 class StudentAdmin(admin.ModelAdmin):
     search_fields = ('name',)
-    list_display = ['tg_id', 'name', 'level', 'group', 'working_interval_from', 'working_interval_to']
+    list_display = ['tg_id', 'name', 'level',
+                    'group', 'working_interval_from',
+                    'working_interval_to']
 
 
 admin.site.register(PM, PMAdmin)

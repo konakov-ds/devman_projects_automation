@@ -38,7 +38,7 @@ class Group(models.Model):
     board_url = models.URLField(verbose_name='URL Trello доски', blank=True, null=True)
 
     def __str__(self):
-        return f'Group {self.id} under PM {self.pm.name}'
+        return f'Group {self.id}'
 
     class Meta:
         verbose_name = 'Команда'
@@ -62,4 +62,4 @@ class Student(models.Model):
     class Meta:
         verbose_name = 'Ученик'
         verbose_name_plural = 'Ученики'
-        ordering = ['level']
+        ordering = ['group']

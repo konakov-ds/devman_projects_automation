@@ -17,9 +17,17 @@ def assign_group(level):
     students = sort_by_time(students)
     counter = 0
     for student in students:
-        while counter < 3:
-            if counter == 0:
-                group = Group.objects.create()
-                student.group = group
-                counter += 1
-            if
+        if counter == 0:
+            group = Group.objects.create()
+            student.group = group
+            previous = student
+        elif student.working_interval_from < previous.working_interval_to and counter < 3:
+            student.group = group
+            previous = student
+        else:
+            group = Group.objects.create()
+            student.group = group
+        student.save()
+        counter += 1
+        if counter > 2:
+            counter = 0
