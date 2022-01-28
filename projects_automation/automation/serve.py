@@ -18,4 +18,8 @@ def assign_group(level):
     counter = 0
     for student in students:
         while counter < 3:
-            group = Group.objects.create
+            if counter == 0:
+                group = Group.objects.create()
+                student.group = group
+                counter += 1
+            if
