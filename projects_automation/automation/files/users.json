@@ -5,7 +5,8 @@
       "level": "junior",
       "working_interval_from": "18:00",
       "working_interval_to": "19:00",
-      "tg_id": "12345"
+      "tg_id": "12345",
+      "email": "mailbox1@mail.org"
   },
   {
       "role": "student",
@@ -13,6 +14,7 @@
       "level": "novice",
       "working_interval_from": "18:00",
       "working_interval_to": "19:00",
-      "tg_id": "12346"
+      "tg_id": "12346",
+      "email": "mailbox2@mail.org"
   }
 ]

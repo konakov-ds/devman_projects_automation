@@ -34,6 +34,7 @@ def upload_users(request):
         for student in students:
             Student.objects.create(
                 tg_id=student['tg_id'],
+                email=student['email'],
                 name=student['name'],
                 level=student['level'],
                 working_interval_from=student['working_interval_from'],
