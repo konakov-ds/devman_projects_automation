@@ -30,3 +30,12 @@ def assign_group(level):
         counter += 1
         if counter > 2:
             counter = 0
+
+
+def get_incomplete_groups():
+    incomplete_groups = []
+    groups = Group.objects.all()
+    for group in groups:
+        if len(group.students.all()) < 3:
+            incomplete_groups.append(group)
+    return incomplete_groups
