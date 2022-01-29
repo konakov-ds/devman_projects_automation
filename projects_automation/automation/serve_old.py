@@ -20,10 +20,9 @@ def assign_group(level):
         if counter == 0:
             group = Group.objects.create()
             student.group = group
-            previous = student
-        elif student.working_interval_from < previous.working_interval_to and counter < 3:
+            first_in_group = student
+        elif student.working_interval_from < first_in_group.working_interval_to and counter < 3:
             student.group = group
-            previous = student
         else:
             group = Group.objects.create()
             student.group = group

@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from dotenv import load_dotenv
 
 from .models import PM, Student
-from .serve import assign_group
+from .serve_old import assign_group
 from trello.trello import create_workspace, create_board, add_members_board
 
 FILES_PATH = Path(__file__).resolve().parent / 'files/'
