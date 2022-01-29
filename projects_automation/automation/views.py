@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from dotenv import load_dotenv
 
-from .models import PM, Student
+from .models import PM, Student, Group
 from .serve import assign_group
 from trello.trello import create_workspace, create_board, add_members_board
 
@@ -59,6 +59,23 @@ def assign_groups(request, level):
 def create_wrksp(request):
     if request.method == 'POST' and trello_apikey:
         wrksp_name = request.POST.get('project', 'Проект Новый [01.12.2022-07.12.2022]')
+
         wrksp_id = create_workspace(trello_apikey, trello_token, wrksp_name)
-        # todo проверяем группы и генерим доски
+
+        groups = Group.objects.filter(
+            pm__isnull=False,
+            start_from__isnull=False,
+            students__isnull=False
+            ).distinct()
+        for group in groups:
+            board_name = (
+                f'{group.start_from.strftime("%H:%M")} '
+                f'{", ".join([str(student.name) for student in group.students.all()])}'
+            )
+
+            board_id, board_url = create_board(trello_apikey, trello_token, wrksp_id, board_name, group.pm.board_bg)
+
+            for student in group.students.all():
+                add_members_board(trello_apikey, trello_token, board_id, student.email)
+            
     return HttpResponseRedirect('/admin')
