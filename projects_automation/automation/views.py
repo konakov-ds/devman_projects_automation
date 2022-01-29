@@ -2,10 +2,10 @@ import json
 
 from pathlib import Path
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 from .models import PM, Student
-
+from .serve import assign_group
 
 FILES_PATH = Path(__file__).resolve().parent / 'files/'
 
@@ -41,3 +41,8 @@ def upload_users(request):
                 working_interval_to=student['working_interval_to']
             )
     return HttpResponseRedirect('/admin')
+
+
+def assign_groups(request):
+    assign_group('junior')
+    return HttpResponse('Groups created.')

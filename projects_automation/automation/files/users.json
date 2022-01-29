@@ -1,20 +1,83 @@
 [
-  {
-      "role": "student",
-      "name": "Александр Попов",
-      "level": "junior",
-      "working_interval_from": "18:00",
-      "working_interval_to": "19:00",
-      "tg_id": "12345",
-      "email": "mailbox1@mail.org"
-  },
-  {
-      "role": "student",
-      "name": "Иван Петров",
-      "level": "novice",
-      "working_interval_from": "18:00",
-      "working_interval_to": "19:00",
-      "tg_id": "12346",
-      "email": "mailbox2@mail.org"
-  }
+	{
+		"role": "manager",
+		"tg_id": "123",
+		"name": "Ivan",
+		"email": "ivan@mail.com",
+		"level": "",
+		"working_interval_from": "18:00",
+		"working_interval_to": "18:30"
+	},
+	{
+		"role": "student",
+		"tg_id": "321",
+		"name": "Petya",
+		"email": "petya@mail.com",
+		"level": "junior",
+		"working_interval_from": "18:30",
+		"working_interval_to": "19:00"
+	},
+	{
+		"role": "student",
+		"tg_id": "345",
+		"name": "Vasya",
+		"email": "vasya@mail.com",
+		"level": "junior",
+		"working_interval_from": "19:00",
+		"working_interval_to": "19:30"
+	},
+	{
+		"role": "student",
+		"tg_id": "52",
+		"name": "Katya",
+		"email": "katya@mail.com",
+		"level": "junior",
+		"working_interval_from": "18:30",
+		"working_interval_to": "19:00"
+	},
+	{
+		"role": "student",
+		"tg_id": "74",
+		"name": "Vanya",
+		"email": "vanya@mail.com",
+		"level": "junior",
+		"working_interval_from": "18:00",
+		"working_interval_to": "19:00"
+	},
+	{
+		"role": "student",
+		"tg_id": "12",
+		"name": "Kolya",
+		"email": "kolya@mail.com",
+		"level": "junior",
+		"working_interval_from": "20:30",
+		"working_interval_to": "21:00"
+	},
+	{
+		"role": "student",
+		"tg_id": "57656",
+		"name": "John",
+		"email": "john@mail.com",
+		"level": "junior",
+		"working_interval_from": "19:30",
+		"working_interval_to": "20:00"
+	},
+	{
+		"role": "student",
+		"tg_id": "26",
+		"name": "Jack",
+		"email": "jack@mail.com",
+		"level": "junior",
+		"working_interval_from": "17:30",
+		"working_interval_to": "18:00"
+	},
+	{
+		"role": "student",
+		"tg_id": "84",
+		"name": "Mike",
+		"email": "mike@mail.com",
+		"level": "junior",
+		"working_interval_from": "18:30",
+		"working_interval_to": "19:00"
+	}
 ]
