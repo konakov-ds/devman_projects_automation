@@ -37,6 +37,18 @@ class Group(models.Model):
     start_from = models.DateTimeField(blank=True, null=True)
     board_url = models.URLField(verbose_name='URL Trello доски', blank=True, null=True)
 
+    def get_group_students(self):
+        students = []
+        for student in self.students.all():
+            students.append(
+                (
+                    f'{str(student.name)} '
+                    f'{str(student.working_interval_from.strftime("%H:%M"))} - '
+                    f'{str(student.working_interval_to.strftime("%H:%M"))}'
+                )
+            )
+        return ', '.join(students)
+
     def __str__(self):
         return f'Group {self.id}'
 

@@ -60,4 +60,17 @@
          </div>
     </form>
 </div>
+<br><br><hr><br>
+<div>
+    <form method="POST" action="/admin/automation/create_wrksp">
+        {% csrf_token %}
+        <div>
+            <p><label for="file">Введите наименование проекта</label></p>
+            <input type="text" id="project" name="project" size="50" value="Проект Новый [01.12.2022-07.12.2022]">
+        </div>
+        <div>
+            <button>Создать Trello проект</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
