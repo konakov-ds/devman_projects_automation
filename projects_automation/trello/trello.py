@@ -42,7 +42,7 @@ def create_board(trello_apikey, trello_token, wrksp_id, board_name, board_bg):
     response = requests.post(url, data=payload, headers=headers)
     response.raise_for_status()
     board = response.json()
-    logger.info(f'Create board {board_name}, {board["url"]}')
+    logger.info(f'Create board {board_name}, {board["shortUrl"]}')
     return board['id'], board['shortUrl']
 
 
@@ -57,5 +57,6 @@ def add_members_board(trello_apikey, trello_token, board_id, member_email):
 
     response = requests.put(url, params=payload)
     response.raise_for_status()
+    logger.info(f'Add member {member_email} to board {board_id}')
     members = response.json()
 
