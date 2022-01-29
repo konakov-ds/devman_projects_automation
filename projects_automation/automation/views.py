@@ -43,6 +43,6 @@ def upload_users(request):
     return HttpResponseRedirect('/admin')
 
 
-def assign_groups(request):
-    assign_group('junior')
+def assign_groups(request, level):
+    assign_group(level)
     return HttpResponse('Groups created.')
