@@ -40,6 +40,15 @@ class Group(models.Model):
     def __str__(self):
         return f'Group {self.id}'
 
+    def get_group_students(self):
+        students = []
+        for student in self.students.all():
+            students.append(
+                f'{str(student.name)} {str(student.working_interval_from.strftime("%H:%M"))} {str(student.working_interval_to.strftime("%H:%M"))}'    
+            )
+        return ', '.join(students)
+
+
     class Meta:
         verbose_name = 'Команда'
         verbose_name_plural = 'Команды'
