@@ -1,13 +1,21 @@
 import json
+import os
 
 from pathlib import Path
 
 from django.http import HttpResponseRedirect, HttpResponse
 
+from dotenv import load_dotenv
+
 from .models import PM, Student
 from .serve import assign_group
+from trello.trello import create_workspace, create_board, add_members_board
 
 FILES_PATH = Path(__file__).resolve().parent / 'files/'
+
+load_dotenv('./trello/.env')
+trello_apikey = os.getenv('TRELLO_API_KEY')
+trello_token = os.getenv('TRELLO_TOKEN')
 
 
 def handle_uploaded_file(file):
@@ -46,3 +54,11 @@ def upload_users(request):
 def assign_groups(request, level):
     assign_group(level)
     return HttpResponse('Groups created.')
+
+
+def create_wrksp(request):
+    if request.method == 'POST' and trello_apikey:
+        wrksp_name = request.POST.get('project', 'Проект Новый [01.12.2022-07.12.2022]')
+        wrksp_id = create_workspace(trello_apikey, trello_token, wrksp_name)
+        # todo проверяем группы и генерим доски
+    return HttpResponseRedirect('/admin')

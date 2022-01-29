@@ -14,6 +14,10 @@ class StudentAdmin(admin.ModelAdmin):
                     'working_interval_to']
 
 
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ['id', 'pm', 'start_from', 'get_group_students']
+
+
 admin.site.register(PM, PMAdmin)
-admin.site.register(Group)
+admin.site.register(Group, GroupAdmin)
 admin.site.register(Student, StudentAdmin)
