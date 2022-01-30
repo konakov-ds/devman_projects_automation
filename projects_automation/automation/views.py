@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 from .models import PM, Student, Group
 
-from .serve_old import assign_group
+from .serve_old import assign_group, candidates_for_telegram_push, send_new_time_for_singles
 
 from trello.trello import create_workspace, create_board, add_members_board
 
@@ -60,6 +60,8 @@ def upload_users(request):
 
 def assign_groups(request, level):
     assign_group(level)
+    group_for_single = candidates_for_telegram_push()
+    send_new_time_for_singles(group_for_single)
     return HttpResponse('Groups created.')
 
 
@@ -98,4 +100,3 @@ def create_wrksp(request):
                 except:
                     pass
     return HttpResponseRedirect('/admin')
-
