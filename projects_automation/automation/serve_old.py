@@ -12,6 +12,20 @@ def sort_by_time(student_group):
     return student_group.order_by('-working_interval_to').order_by('working_interval_from')
 
 
+def assign_pm_for_group(group, managers):
+    max_manager_groups = 3
+    group_time_from, group_time_to = get_group_work_interval(group)
+    for manager in managers:
+        manager_groups = Group.objects.filter(pm_id=manager.id)
+        if (float(str(manager.working_interval_from)[:-3].replace(':', '.')) <= group_time_from) \
+                and (float(str(manager.working_interval_to)[:-3].replace(':', '.')) >= group_time_to) \
+                and len(manager_groups) < max_manager_groups:
+            group.pm = manager
+            group.save()
+            return True
+    return False
+
+
 def assign_group(level):
     students = group_students_by_level(level)
     students = sort_by_time(students)

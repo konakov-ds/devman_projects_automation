@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from .models import PM, Student, Group
 
-from .serve_old import assign_group
+from .serve_old import assign_group, assign_pm_for_group
 
 from trello.trello import create_workspace, create_board, add_members_board
 
@@ -56,6 +56,14 @@ def upload_users(request):
 def assign_groups(request, level):
     assign_group(level)
     return HttpResponse('Groups created.')
+
+
+def assign_pm(request):
+    groups = Group.objects.all()
+    managers = PM.objects.all()
+    for group in groups:
+        assign_pm_for_group(group, managers)
+    return HttpResponse('PM assigned. Maybe:)')
 
 
 def create_wrksp(request):
