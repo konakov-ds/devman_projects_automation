@@ -12,8 +12,8 @@ from telegram.ext import MessageHandler
 env = Env()
 env.read_env()
 
-TIME_FROM, TIME_TO, SAVE_INPUT = range(3)
-TIME_FROM_PM, TIME_TO_PM, SAVE_INPUT_PM = range(3, 6)
+TIME_FROM, TIME_TO, SAVE_INPUT, UPDATE_INPUT = range(4)
+TIME_FROM_PM, TIME_TO_PM, SAVE_INPUT_PM = range(4, 7)
 
 START_PROJECT_KEYBOARD = ReplyKeyboardMarkup(
     keyboard=[
@@ -211,7 +211,23 @@ def save_student_input(update, context):
         reply_markup=ReplyKeyboardRemove()
     )
 
-    return ConversationHandler.END
+    return UPDATE_INPUT
+
+
+def update_student_time(update, context):
+    message = update.message
+    user_id = message.chat_id
+
+    if message.text == 'Подтвердить новое время':
+        context.bot.send_message(
+            chat_id=user_id,
+            text=f'Отлично! Ты записан на проект!',
+            reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
+    elif message.text == 'Не смогу участвовать в проекте':
+        student = Student.objects.get(tg_id=user_id)
+        student.group = None
 
 
 def save_pm_input(update, context):
@@ -246,6 +262,7 @@ project_handler = ConversationHandler(
         TIME_FROM: [MessageHandler(Filters.text, ask_student_time_from)],
         TIME_TO: [MessageHandler(Filters.text, ask_student_time_to)],
         SAVE_INPUT: [MessageHandler(Filters.text, save_student_input)],
+        UPDATE_INPUT: [MessageHandler(Filters.text, update_student_time)],
         TIME_FROM_PM: [MessageHandler(Filters.text, ask_pm_time_from)],
         TIME_TO_PM: [MessageHandler(Filters.text, ask_pm_time_to)],
         SAVE_INPUT_PM: [MessageHandler(Filters.text, save_pm_input)]
