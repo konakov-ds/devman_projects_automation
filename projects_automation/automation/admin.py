@@ -11,11 +11,11 @@ class StudentAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     list_display = ['tg_id', 'name', 'level',
                     'group', 'working_interval_from',
-                    'working_interval_to']
+                    'working_interval_to', 'email']
 
 
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ['id', 'pm', 'start_from', 'get_group_students']
+    list_display = ['id', 'pm', 'start_from', 'get_group_students', 'board_url']
 
 
 admin.site.register(PM, PMAdmin)

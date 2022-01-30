@@ -1,5 +1,8 @@
 import json
-import os
+
+import telegram
+
+from environs import Env
 
 from pathlib import Path
 
@@ -7,16 +10,20 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from dotenv import load_dotenv
 
-from .models import PM, Student
+from .models import PM, Student, Group
+
 from .serve_old import assign_group
+
 from trello.trello import create_workspace, create_board, add_members_board
 
 FILES_PATH = Path(__file__).resolve().parent / 'files/'
 
-load_dotenv('./trello/.env')
-trello_apikey = os.getenv('TRELLO_API_KEY')
-trello_token = os.getenv('TRELLO_TOKEN')
+env = Env()
+env.read_env()
 
+trello_apikey = env('TRELLO_API_KEY')
+trello_token = env('TRELLO_TOKEN')
+telegram_token = env('TELEGRAM_TOKEN')
 
 def handle_uploaded_file(file):
     Path(Path(__file__).resolve().parent / 'files').mkdir(parents=True, exist_ok=True)
@@ -59,6 +66,36 @@ def assign_groups(request, level):
 def create_wrksp(request):
     if request.method == 'POST' and trello_apikey:
         wrksp_name = request.POST.get('project', 'Проект Новый [01.12.2022-07.12.2022]')
+
         wrksp_id = create_workspace(trello_apikey, trello_token, wrksp_name)
-        # todo проверяем группы и генерим доски
+
+        bot = telegram.Bot(token=telegram_token)
+
+        groups = Group.objects.filter(
+            pm__isnull=False,
+            start_from__isnull=False,
+            students__isnull=False
+            ).distinct()
+        groups = Group.objects.filter(id=16)
+        for group in groups:
+            board_name = (
+                f'{group.start_from.strftime("%H:%M")} '
+                f'{", ".join([str(student.name) for student in group.students.all()])}'
+            )
+
+            board_id, board_url = create_board(trello_apikey, trello_token, wrksp_id, board_name, group.pm.board_bg)
+            group.board_url = board_url
+            group.save()
+
+            for student in group.students.all():
+                add_members_board(trello_apikey, trello_token, board_id, student.email)
+                #print(f'TODO отправка в TG {student.tg_id} ссылки {board_url}')
+                #bot.send_message(chat_id=student.tg_id, text=board_url)
+                message = f'Добро пожаловать в "{wrksp_name}" заходи {board_url}'
+                try:
+                    bot.send_message(chat_id=student.tg_id, text=message)
+                    print(f'TODO отправка в TG {student.tg_id} ссылки {board_url}')
+                except:
+                    pass
     return HttpResponseRedirect('/admin')
+
