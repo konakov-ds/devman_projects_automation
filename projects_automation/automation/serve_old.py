@@ -1,4 +1,25 @@
+import telegram
+from environs import Env
+from telegram import KeyboardButton, ReplyKeyboardMarkup
 from .models import Student, Group
+
+
+env = Env()
+env.read_env()
+
+tg_token = env('TELEGRAM_TOKEN')
+
+STUDENT_UPDATE_KEYBOARD = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Подтвердить новое время'),
+        ],
+[
+            KeyboardButton(text='Не смогу участвовать в проекте'),
+        ],
+    ],
+    resize_keyboard=True
+)
 
 
 def group_students_by_level(level):
@@ -98,12 +119,36 @@ def candidates_for_telegram_push():
         group.students.all().first() for group in groups_with_one
     ]
     group_for_single = []
-    for student in single_students:
-        selected_group =  groups_with_two[0]
+    for student in single_students[:len(groups_with_two)]:
+        selected_group = groups_with_two[0]
         distance = get_min_time_distance(student, selected_group)
         for group in groups_with_two[1:]:
             if get_min_time_distance(student, group) < distance:
                 selected_group = group
         group_for_single.append((student, selected_group))
 
-    return group_for_single
+    return group_for_single, single_students[len(groups_with_two):]
+
+
+def send_message_to_student(user_id, time_from, time_to):
+    bot = telegram.Bot(token=tg_token)
+    bot.send_message(
+        chat_id=user_id,
+        text='Привет девманец!\nК сожалению, выбранное тобой время созвона'
+             ' не согласуется с остальными участниками. Мы можем предложить группу'
+             f' со следующим интервалом {time_from} - {time_to}',
+        reply_markup=STUDENT_UPDATE_KEYBOARD,
+    )
+
+
+def send_new_time_for_singles(group_for_single):
+    for item in group_for_single:
+        student, group = item
+        group_time_from, group_time_to = get_group_work_interval(group)
+        send_message_to_student(
+            student.tg_id,
+            str(group_time_from).replace('.', ':') + '0',
+            str(group_time_to).replace('.', ':') + '0',
+        )
+        student.group = group
+        student.save()

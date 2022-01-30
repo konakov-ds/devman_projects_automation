@@ -1,6 +1,7 @@
 import logging
-import os
-from dotenv import load_dotenv
+
+from environs import Env
+
 from trello import create_workspace, create_board, add_members_board
 
 groups = [
@@ -49,10 +50,11 @@ groups = [
 
 
 def main():
-    load_dotenv()
-    trello_apikey = os.getenv("TRELLO_API_KEY")
-    trello_token = os.getenv("TRELLO_TOKEN")
+    env = Env()
+    env.read_env()
 
+    trello_apikey = env('TRELLO_API_KEY')
+    trello_token = env('TRELLO_TOKEN')
     """
     1. Создание рабочего пространства workspace/organization
     Проект {project_name} [{project_start_date}-{project_end_date}]

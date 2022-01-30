@@ -11,7 +11,7 @@
 Сгенерируйте токен вручную.
 
 ![image generate_token](generate_token.png)
-Сохраните в `.env` полученный API ключ и токен
+Сохраните в `.env` (в каталоге рядом с manage.py) полученный API ключ и токен
 ```
 # sample trello key
 TRELLO_API_KEY=X4X9e2X5XX623c7XX0b9dcX1XXb32aXX
