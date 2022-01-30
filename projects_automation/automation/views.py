@@ -76,8 +76,11 @@ def create_wrksp(request):
             )
 
             board_id, board_url = create_board(trello_apikey, trello_token, wrksp_id, board_name, group.pm.board_bg)
+            group.board_url = board_url
+            group.save()
 
             for student in group.students.all():
                 add_members_board(trello_apikey, trello_token, board_id, student.email)
+                print(f'TODO отправка в TG {student.tg_id} ссылки {board_url}')
             
     return HttpResponseRedirect('/admin')
