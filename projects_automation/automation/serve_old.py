@@ -56,14 +56,14 @@ def assign_group(level):
             group = Group.objects.create()
             student.group = group
             first_in_group = student
-            counter += 1
         elif student.working_interval_from < first_in_group.working_interval_to and counter < 3:
             student.group = group
-            counter += 1
         else:
             group = Group.objects.create()
             student.group = group
+            counter = 0
         student.save()
+        counter += 1
         if counter > 2:
             counter = 0
 
