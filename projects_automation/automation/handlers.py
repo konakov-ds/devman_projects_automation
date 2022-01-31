@@ -217,11 +217,11 @@ def save_student_input(update, context):
 def update_student_time(update, context):
     message = update.message
     user_id = message.chat_id
-
+    print(message.text)
     if message.text == 'Подтвердить новое время':
         context.bot.send_message(
             chat_id=user_id,
-            text=f'Отлично! Ты записан на проект!',
+            text='Отлично! Ты записан на проект!',
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
@@ -231,7 +231,7 @@ def update_student_time(update, context):
         student.save()
         context.bot.send_message(
             chat_id=user_id,
-            text=f'Очень жаль :( Тогда ждем тебя на следующем!',
+            text='Очень жаль :( Тогда ждем тебя на следующем!',
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
