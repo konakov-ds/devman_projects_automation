@@ -228,6 +228,7 @@ def update_student_time(update, context):
     elif message.text == 'Не смогу участвовать в проекте':
         student = Student.objects.get(tg_id=user_id)
         student.group = None
+        student.save()
 
 
 def save_pm_input(update, context):
