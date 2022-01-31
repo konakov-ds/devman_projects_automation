@@ -142,6 +142,8 @@ def send_message_to_student(user_id, time_from, time_to):
 
 
 def send_new_time_for_singles(group_for_single):
+    if not group_for_single:
+        pass
     for item in group_for_single:
         student, group = item
         group_time_from, group_time_to = get_group_work_interval(group)
