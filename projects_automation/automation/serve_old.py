@@ -61,6 +61,7 @@ def assign_group(level):
         else:
             group = Group.objects.create()
             student.group = group
+            first_in_group = student
         student.save()
         counter += 1
         if counter > 2:
