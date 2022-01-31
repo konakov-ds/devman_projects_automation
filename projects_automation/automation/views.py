@@ -86,7 +86,7 @@ def create_wrksp(request):
             start_from__isnull=False,
             students__isnull=False
             ).distinct()
-        #groups = Group.objects.filter(id=16)
+        # groups = Group.objects.filter(id=16)
         for group in groups:
             board_name = (
                 f'{group.start_from.strftime("%H:%M")} '
@@ -98,9 +98,9 @@ def create_wrksp(request):
             group.save()
 
             for student in group.students.all():
-                add_members_board(trello_apikey, trello_token, board_id, student.email)
+                if student.email:
+                    add_members_board(trello_apikey, trello_token, board_id, student.email)
                 #print(f'TODO отправка в TG {student.tg_id} ссылки {board_url}')
-                #bot.send_message(chat_id=student.tg_id, text=board_url)
                 message = f'Добро пожаловать в "{wrksp_name}" заходи {board_url}'
                 try:
                     bot.send_message(chat_id=student.tg_id, text=message)
