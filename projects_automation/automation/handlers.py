@@ -225,15 +225,16 @@ def update_student_time(update, context):
             reply_markup=ReplyKeyboardRemove()
         )
         return ConversationHandler.END
-    # student = Student.objects.get(tg_id=user_id)
-    # student.group = None
-    # student.save()
-    context.bot.send_message(
-        chat_id=user_id,
-        text=f'Очень жаль :( Тогда ждем тебя на следующем!',
-        reply_markup=ReplyKeyboardRemove()
-    )
-    return ConversationHandler.END
+    elif message.text == 'Не смогу участвовать в проекте':
+        student = Student.objects.get(tg_id=user_id)
+        student.group = None
+        student.save()
+        context.bot.send_message(
+            chat_id=user_id,
+            text=f'Очень жаль :( Тогда ждем тебя на следующем!',
+            reply_markup=ReplyKeyboardRemove()
+        )
+        return ConversationHandler.END
 
 
 def save_pm_input(update, context):
