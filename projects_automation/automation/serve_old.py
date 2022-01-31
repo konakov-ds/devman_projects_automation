@@ -14,7 +14,7 @@ STUDENT_UPDATE_KEYBOARD = ReplyKeyboardMarkup(
         [
             KeyboardButton(text='Подтвердить новое время'),
         ],
-[
+        [
             KeyboardButton(text='Не смогу участвовать в проекте'),
         ],
     ],
