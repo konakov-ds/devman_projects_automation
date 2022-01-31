@@ -25,6 +25,7 @@ trello_apikey = env('TRELLO_API_KEY')
 trello_token = env('TRELLO_TOKEN')
 telegram_token = env('TELEGRAM_TOKEN')
 
+
 def handle_uploaded_file(file):
     Path(Path(__file__).resolve().parent / 'files').mkdir(parents=True, exist_ok=True)
     with open(FILES_PATH / 'users.json', 'wb') as destination:
@@ -60,7 +61,7 @@ def upload_users(request):
 
 def assign_groups(request, level):
     assign_group(level)
-    group_for_single = candidates_for_telegram_push()
+    group_for_single, _ = candidates_for_telegram_push()
     send_new_time_for_singles(group_for_single)
     return HttpResponse('Groups created.')
 
