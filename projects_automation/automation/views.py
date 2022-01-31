@@ -78,7 +78,7 @@ def create_wrksp(request):
             start_from__isnull=False,
             students__isnull=False
             ).distinct()
-        groups = Group.objects.filter(id=16)
+        #groups = Group.objects.filter(id=16)
         for group in groups:
             board_name = (
                 f'{group.start_from.strftime("%H:%M")} '
